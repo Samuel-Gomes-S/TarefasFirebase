@@ -9,6 +9,9 @@ import {
     Title
 } from "./styles";
 import { toast } from "react-toastify";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebaseConnections";
+
 
 
 
@@ -33,7 +36,12 @@ export default function Home() {
             return
         }
 
+        signInWithEmailAndPassword(auth, email, password).then(() => {
+            toast.success('Logado com sucesso')
+        }).catch((error) => {
+            toast.warning('Verifique os dados digitados.')
 
+        })
     }
 
     return (

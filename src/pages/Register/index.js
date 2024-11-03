@@ -8,6 +8,8 @@ import {
     Text
 } from "./styles";
 import { toast } from "react-toastify";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "../../firebaseConnections";
 
 export default function Register() {
     const [name, setName] = useState('')
@@ -17,7 +19,7 @@ export default function Register() {
     const refPassword = useRef()
     const refEmail = useRef()
 
-    async function handleRegister(e) {
+    function handleRegister(e) {
         e.preventDefault()
         if (!name) {
             refName.current.focus()
@@ -31,11 +33,33 @@ export default function Register() {
         }
         if (!password) {
             toast.warn("Preencha o campo da senha")
-
             refPassword.current.focus()
-
             return
         }
+
+        createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
+            const user = userCredential.user
+            return updateProfile(user, {
+                displayName: name
+            })
+        }).then(() => {
+            toast.success('Usuario cadastrado!')
+            setEmail('')
+            setName('')
+            setPassword('')
+        }).catch((error) => {
+
+            if (error.code == 'auth/email-already-in-use') {
+                toast.warning('Já possui uma conta registrada com esse email')
+                return
+            }
+            if (error.code == 'auth/weak-password') {
+                toast.warning('A senha deve possuir no minimo 6 caracteres')
+                return
+            }
+
+        })
+
     }
     return (
         <Container>
