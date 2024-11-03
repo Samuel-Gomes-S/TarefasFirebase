@@ -7,8 +7,8 @@ export default function RoutesApp() {
     return (
         <Routes>
             
-            <Route path="/" Component={<Home />} />
-            <Route path="/register" Component={<Register />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<Register />} />
 
         </Routes>
 
