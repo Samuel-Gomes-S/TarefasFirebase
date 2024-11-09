@@ -82,6 +82,7 @@ export default function Admin() {
             setTaskInput('')
         } catch (error) {
             toast.error('Erro ao adicionar a tarefa ' + error)
+            setTaskInput('')
         }
     }
 
@@ -111,6 +112,9 @@ export default function Admin() {
             })
         } catch (error) {
             toast.error('Erro ao atualizar a tarefa ' + error)
+            setTaskInput('')
+            setTaskId(undefined)
+            setInEditing(false)
         }
     }
     return (
