@@ -101,8 +101,9 @@ export default function Admin() {
                 description: taskInput,
             }).then(() => {
                 setTaskInput('')
-                taskId(undefined)
+                setTaskId(undefined)
                 setInEditing(false)
+                toast.success('Tarefa atualizada!')
             })
         } catch (error) {
             toast.error('Erro ao atualizar a tarefa ' + error)

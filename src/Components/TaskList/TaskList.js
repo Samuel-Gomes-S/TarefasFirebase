@@ -16,7 +16,7 @@ import { db } from "../../firebaseConnections";
 import { toast } from "react-toastify";
 
 
-export default function TaskList({ data, input, editing , idTask}) {
+export default function TaskList({ data, input, editing, idTask }) {
 
     function handleEditTask() {
         input(data.description)
@@ -36,7 +36,7 @@ export default function TaskList({ data, input, editing , idTask}) {
 
     return (
 
-        <Container>
+        <Container key={data.id} >
             <DescriptionArea>
                 <Description>
                     Tarefa: <br />
