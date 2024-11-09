@@ -10,6 +10,7 @@ import {
 import { toast } from "react-toastify";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../../firebaseConnections";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
     const [name, setName] = useState('')
@@ -18,8 +19,9 @@ export default function Register() {
     const refName = useRef()
     const refPassword = useRef()
     const refEmail = useRef()
+    const navigation = useNavigate()
 
-    function handleRegister(e) {
+    async function handleRegister(e) {
         e.preventDefault()
         if (!name) {
             refName.current.focus()
@@ -37,7 +39,7 @@ export default function Register() {
             return
         }
 
-        createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
+        await createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
             const user = userCredential.user
             return updateProfile(user, {
                 displayName: name
@@ -47,6 +49,7 @@ export default function Register() {
             setEmail('')
             setName('')
             setPassword('')
+            navigation('/admin', { replace: true })
         }).catch((error) => {
 
             if (error.code == 'auth/email-already-in-use') {
@@ -63,7 +66,9 @@ export default function Register() {
     }
     return (
         <Container>
-            <Text>Registrar conta </Text>
+            <Text>
+                Registrar conta
+            </Text>
             <Form>
                 <Input
                     type="text"
@@ -87,7 +92,9 @@ export default function Register() {
                     onChange={(e) => setPassword(e.target.value)}
                     ref={refPassword}
                 />
-                <SubmitButton onClick={handleRegister}>
+                <SubmitButton
+                    onClick={handleRegister}
+                >
                     Registrar
                 </SubmitButton>
             </Form>

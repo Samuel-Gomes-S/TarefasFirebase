@@ -40,6 +40,14 @@ const SubmitButton = styled.button`
     color: #fff;
     font-weight: 500;
     text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+    &:hover {
+        background-color: #e7e7e7;
+        color: #3498db;
+    }
+    &:active{
+        background-color: #444
+    }
 `;
 
 const RegisterButton = styled(Link)`
