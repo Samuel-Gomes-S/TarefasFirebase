@@ -88,9 +88,13 @@ export default function Admin() {
 
 
     async function logOut() {
-        await signOut(auth)
-        localStorage.removeItem('@user')
-        toast.success('LogOut realizado com sucesso!')
+        try {
+            await signOut(auth)
+            localStorage.removeItem('@user')
+            toast.success('LogOut realizado com sucesso!')
+        } catch (error) {
+            toast.success('Erro ao sair da aplicação ' + error.code)
+        }
     }
 
     async function handleUpdateTask(e) {
